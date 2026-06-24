@@ -21,7 +21,12 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 0.6px solid #444242;
-    height: 80px;
+    height: 60px;
+    cursor: pointer;
+}
+
+.linha:hover {
+    background-color: #2b2a2a;
 }
 
 .linha li {
@@ -35,3 +40,4 @@
 .linha li :nth-child(4){
     max-width: 100px;
 }
+

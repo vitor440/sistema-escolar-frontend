@@ -3,8 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import MainContent from './components/MainContent.jsx'
 import PageTarefas from './components/PageTarefas.jsx'
+import PageResultados from './components/PageResultados.jsx'
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom'
 import App from './App.jsx'
+
+
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,10 @@ const router = createBrowserRouter([
       {
         path:"/tarefas",
         element: <PageTarefas/>
+      },
+      {
+        path:"/resultados",
+        element: <PageResultados/>
       }
     ]
   }

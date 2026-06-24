@@ -25,7 +25,8 @@ const SideBar = () => {
                 </div>
                 <div className="item">
                   <FaCalendarAlt color='#fff'/>
-                  <li>Calendário de provas</li>
+                  {/* <li>Calendário de provas</li> */}
+                  <Link to={"/resultados"} className='link'>Calendário de provas</Link>
                 </div>
                 <div className="item">
                   <LuNotebookPen color='#fff'/>

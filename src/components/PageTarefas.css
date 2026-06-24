@@ -12,6 +12,12 @@
     display: flex;
     justify-content: space-around;
     padding: 1rem;
+    margin-top: 2rem;
+}
+
+.lista-tarefas {
+    background-color: #181818;
+    margin-top: 2rem;
 }
 
 .search-div label{
@@ -26,4 +32,42 @@
 #filtrar-btn {
     width: 160px;
     height: 26px;
+    background-color: #181818;
+    color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+#filtrar-btn:hover {
+    opacity: 0.6;
+}
+
+.lista-tarefas .lista.linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.6px solid #444242;
+    height: 80px;
+}
+
+.lista-tarefas .linha li {
+    text-align: center;
+    padding: 8px;
+    flex: 1;
+    margin-top: .7rem;
+    min-width: 140px;
+}
+
+.lista-tarefas .linha li :nth-child(4){
+    max-width: 100px;
+}
+
+select {
+    background-color: #181818;
+    color: #fff;
+}
+
+#header-lista {
+    background-color: #0f0f0f;
 }

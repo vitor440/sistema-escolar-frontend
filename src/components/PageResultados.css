@@ -1,0 +1,35 @@
+.resultados-container {
+    padding: 2rem;
+
+}
+
+#exame-titulo{
+    margin: 0 1rem;
+    background-color: #181818;
+    border: 1px solid #fff;
+    height: 20px;
+    color: #fff;
+    padding: 1rem;
+}
+
+.linha #titulo {
+    color: #038d21;
+}
+
+.linha #titulo:hover {
+    cursor: pointer;
+    color: #8d4d03
+}
+
+.linha li {
+    font-size: 16px;
+}
+
+.search-div {
+    margin-bottom: 2rem;
+}
+
+#tabela-avaliacoes {
+    width: 1800px;
+}
+

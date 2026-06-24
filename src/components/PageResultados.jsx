@@ -1,13 +1,18 @@
 import React from 'react'
-import "./PageTarefas.css"
-import { IoSearchOutline } from "react-icons/io5";
-import ListaTarefas2 from './ListaTarefas2';
+import './PageResultados.css'
+import ListaAvaliacoes from './ListaAvaliacoes'
+import ListaAvaliacoes2 from './ListaAvaliacoes2'
 
-const PageTarefas = () => {
+const PageResultados = () => {
   return (
-    <div className='main-container'>
-        <h2>Tarefas Pendentes</h2>
+    <div className='resultados-container'>
+        <h2>Provas Agendadas</h2>
         <div className="search-div">
+            <div className="opcoes" id='pesquisa-exame'>
+                <label htmlFor="exame-titulo">Pesquisar:</label>
+                <input type="text" name="exame-titulo" id="exame-titulo" />
+            </div>
+            
             <div className="opcoes">
                 <label htmlFor="select-disciplina">Disciplina:</label>
                 <select name="select-disciplina" id="select-disciplina">
@@ -38,22 +43,21 @@ const PageTarefas = () => {
             </div>
             <input type="submit" value="filtrar" id='filtrar-btn'/>
         </div>
-
-
-        <ListaTarefas2/>
+        <div id='tabela-avaliacoes'>
+            <ListaAvaliacoes2 />
+        </div>
+        
         {/* <div className='lista-tarefas'>
             <ul>
               <div className="linha" id='header-lista'>
                 <li>Tarefa</li>
                 <li>Disciplina</li>
                 <li>data de entrega</li>
-                <li>Nota</li>
               </div>
               <div className="linha">
-                <li>Atividade 01 - Diagrama de Casos de Uso</li>
+                <li id='titulo'>Atividade 01 - Diagrama de Casos de Uso</li>
                 <li>Verificação e validação de software</li>
                 <li>domingo, 17 mai. 2026, 23:59</li>
-                <li>9.5</li>
               </div>
             </ul>
         </div> */}
@@ -61,4 +65,4 @@ const PageTarefas = () => {
   )
 }
 
-export default PageTarefas
+export default PageResultados

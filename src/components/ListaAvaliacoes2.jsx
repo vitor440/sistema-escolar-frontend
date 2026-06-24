@@ -1,9 +1,9 @@
 import React from 'react'
-import "./ListaAvaliacoes.css"
+import "./ListaAvaliacoes2.css"
 
-const ListaAvaliacoes = ({Icone, titulo, content, cor}) => {
+const ListaAvaliacoes2 = () => {
   return (
-    <div className='lista-avaliacoes' >
+    <div className='lista-avaliacoes2' >
         <h2>Próximas Avaliações</h2>
           <div className="lista">
             <ul>
@@ -31,4 +31,4 @@ const ListaAvaliacoes = ({Icone, titulo, content, cor}) => {
   )
 }
 
-export default ListaAvaliacoes
+export default ListaAvaliacoes2
