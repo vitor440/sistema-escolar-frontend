@@ -38,25 +38,7 @@ const PageTarefas = () => {
             </div>
             <input type="submit" value="filtrar" id='filtrar-btn'/>
         </div>
-
-
         <ListaTarefas2/>
-        {/* <div className='lista-tarefas'>
-            <ul>
-              <div className="linha" id='header-lista'>
-                <li>Tarefa</li>
-                <li>Disciplina</li>
-                <li>data de entrega</li>
-                <li>Nota</li>
-              </div>
-              <div className="linha">
-                <li>Atividade 01 - Diagrama de Casos de Uso</li>
-                <li>Verificação e validação de software</li>
-                <li>domingo, 17 mai. 2026, 23:59</li>
-                <li>9.5</li>
-              </div>
-            </ul>
-        </div> */}
     </div>
   )
 }

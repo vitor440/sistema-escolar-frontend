@@ -26,7 +26,7 @@ const SideBar = () => {
                 <div className="item">
                   <FaCalendarAlt color='#fff'/>
                   {/* <li>Calendário de provas</li> */}
-                  <Link to={"/resultados"} className='link'>Calendário de provas</Link>
+                  <Link to={"/exames"} className='link'>Calendário de provas</Link>
                 </div>
                 <div className="item">
                   <LuNotebookPen color='#fff'/>
@@ -34,11 +34,13 @@ const SideBar = () => {
                 </div>
                 <div className="item">
                   <FaRegClock color='#fff'/>
-                  <li>Horários</li>
+                  {/* <li>Horários</li> */}
+                  <Link to={"/horarios"} className='link'>Horários</Link>
                 </div>
                 <div className="item">
                   <FaFileCircleCheck color='#fff'/>
-                  <li>Resultados</li>
+                  {/* <li>Resultados</li> */}
+                  <Link to={"/resultados"} className='link'>Resultados</Link>
                 </div>
                 <div className="item">
                   <MdOutlineEventNote color='#fff'/>

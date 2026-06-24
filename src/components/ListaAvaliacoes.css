@@ -8,36 +8,3 @@
     font-size: 20px;
 }
 
-.lista {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    padding: 2rem;
-}
-
-.linha {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 0.6px solid #444242;
-    height: 60px;
-    cursor: pointer;
-}
-
-.linha:hover {
-    background-color: #2b2a2a;
-}
-
-.linha li {
-    text-align: center;
-    padding: 8px;
-    flex: 1;
-    margin-top: .7rem;
-    min-width: 140px;
-}
-
-.linha li :nth-child(4){
-    max-width: 100px;
-}
-

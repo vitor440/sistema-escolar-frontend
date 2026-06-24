@@ -1,1 +1,52 @@
-{}
+{
+    "exames":[
+        {
+            "id": 1,
+            "prova": "prova 1 - VVT",
+            "disciplina": "Verificação e validação de software",
+            "data": "23/10/2026",
+            "hora": "14:00"
+        },
+        {
+            "id": 2,
+            "prova": "prova 2 - VVT",
+            "disciplina": "Verificação e validação de software",
+            "data": "23/11/2026",
+            "hora": "14:00"
+        },
+        {
+            "id": 3,
+            "prova": "prova 2 - redes",
+            "disciplina": "Redes de computadores",
+            "data": "12/10/2026",
+            "hora": "08:00"
+        }
+    ],
+
+    "horarios": [
+        {
+            "id": 1,
+            "disciplina": "matemática",
+            "diaSemana": "SEGUNDA",
+            "hora": "10:00"
+        },
+        {
+            "id": 2,
+            "disciplina": "matemática",
+            "diaSemana": "QUARTA",
+            "hora": "10:00"
+        },
+        {
+            "id": 3,
+            "disciplina": "física",
+            "diaSemana": "Terca",
+            "hora": "08:00"
+        },
+        {
+            "id": 4,
+            "disciplina": "física",
+            "diaSemana": "QUINTA",
+            "hora": "08:00"
+        }        
+    ]
+}

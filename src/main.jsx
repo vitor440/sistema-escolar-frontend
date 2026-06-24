@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import MainContent from './components/MainContent.jsx'
 import PageTarefas from './components/PageTarefas.jsx'
+import PageExames from './components/PageExames.jsx'
+import PageHorarios from './components/PageHorarios.jsx'
 import PageResultados from './components/PageResultados.jsx'
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom'
 import App from './App.jsx'
@@ -23,8 +25,16 @@ const router = createBrowserRouter([
         element: <PageTarefas/>
       },
       {
+        path:"/exames",
+        element: <PageExames/>
+      },
+      {
         path:"/resultados",
         element: <PageResultados/>
+      },
+      {
+        path:"/horarios",
+        element: <PageHorarios/>
       }
     ]
   }
