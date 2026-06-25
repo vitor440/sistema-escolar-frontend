@@ -39,7 +39,7 @@
         {
             "id": 3,
             "disciplina": "física",
-            "diaSemana": "Terca",
+            "diaSemana": "TERCA",
             "hora": "08:00"
         },
         {
@@ -47,6 +47,18 @@
             "disciplina": "física",
             "diaSemana": "QUINTA",
             "hora": "08:00"
-        }        
+        },
+        {
+            "id": 5,
+            "disciplina": "computação gráfica",
+            "diaSemana": "SEXTA",
+            "hora": "08:00"
+        },
+        {
+            "id": 6,
+            "disciplina": "computação gráfica",
+            "diaSemana": "SEXTA",
+            "hora": "10:00"
+        }      
     ]
 }

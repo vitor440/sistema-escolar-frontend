@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./PageHorarios.css"
 import { EventCalendar } from '@mui/x-scheduler';
 import { useState } from 'react';
@@ -17,37 +17,62 @@ const PageHorarios = () => {
         "SEXTA",
         "SABADO"
     ]
-   
-
-    const eventos = [
-    {
-    id: 1,
-    title: 'Engenharia de Software 2',
-    daysOfWeek: ['0', '1'],
-    startTime: '08:00:00',
-    endTime: '10:00:00'
-  },
-  {
-    id: 2,
-    title: 'Verificação e validação de software',
-    daysOfWeek: ['2', '4'],
-    startTime: "10:00:00",
-    endTime: '12:00:00'
-  }
-    ]
-
-    const [events, setEvents] = useState(eventos);
 
     const headerConfig = {
+    left: "",
     center: "title"
         
     }
+
+    const plusHours = (hora) => {
+        return String(parseInt(hora.split(":")[0]) + 2) +":00"
+    }
+
+    useEffect(() => {
+        
+        async function getHorarios() {
+            const listaEventos = []
+            
+            try {
+                const res = await fetch("http://localhost:3000/horarios");
+                const data = await res.json()
+                console.log(data)
+
+                data.map(horario => {
+                    const novoEvento = {
+                        id: horario.id,
+                        title: horario.disciplina,
+                        daysOfWeek: diasSemana.indexOf(horario.diaSemana).toString(),
+                        startTime: horario.hora,
+                        endTime: plusHours(horario.hora)
+                    }
+                listaEventos.push(novoEvento)
+                
+                })
+                
+                setEventos(listaEventos)
+            } catch (error) {
+                console.log(error)
+            }
+            
+
+        } 
+        getHorarios()
+        
+    }, [])
+
+    const [eventos, setEventos] = useState([]);
 
   return (
     <div id="main-container-calendar">
         <h2>Horários disciplinas</h2>
         <div id='calendario-div'>
-            <FullCalendar id="calendario"plugins={[timeGridPlugin]} height="600px" initialView="timeGridWeek" events={eventos}/>
+            <FullCalendar 
+            plugins={[timeGridPlugin]} 
+            height="600px" 
+            initialView="timeGridWeek" 
+            events={eventos} 
+            headerToolbar={headerConfig}/>
         </div>
     </div>
     
