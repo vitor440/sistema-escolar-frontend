@@ -1,23 +1,25 @@
 import { parseMarker } from '@fullcalendar/core/internal';
 import React from 'react'
-import { Navigate, useSearchParams} from 'react-router-dom'
+import { useSearchParams, useNavigate} from 'react-router-dom'
 import { useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 
 const Callback = () => {
 
     const [searchParams] = useSearchParams();
+    let navigate = useNavigate();
+
     const code = searchParams.get("code")
 
     async function getToken() {
         try {
-            console.log("debugando...")
+            
             const params = new URLSearchParams()
+
             params.append("grant_type", "authorization_code");
             params.append("code", code);
             params.append("redirect_uri", "http://localhost:5173/callback");
             
-            console.log("code recebido: " + code)
 
             const response = await fetch("http://localhost:8080/oauth2/token", {
                 method: "POST",
@@ -32,12 +34,26 @@ const Callback = () => {
             
 
             const token = data.access_token
-            console.log("Token: " + token)
+        
+            console.log(token)
 
             const tokenDecoded = jwtDecode(token)
+            console.log(tokenDecoded)
 
             localStorage.setItem("access_token", token)
+            localStorage.setItem("username", tokenDecoded.sub)
+            localStorage.setItem("email", tokenDecoded.email)
+            localStorage.setItem("roles", tokenDecoded.roles)
             
+            if(localStorage.getItem("roles").includes("ALUNO")) {
+                navigate("/")
+            }
+            else if(localStorage.getItem("roles").includes("ADMIN")) {
+                navigate("/admin")
+            }
+            else {
+                navigate("/")
+            }
             
         } catch (error) {
             alert(error)
@@ -51,7 +67,7 @@ const Callback = () => {
 
   return (
     <div>
-        <Navigate to={"/"}/>
+
     </div>
   )
 }

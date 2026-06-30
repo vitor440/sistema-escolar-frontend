@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import HeaderComponent from './components/HeaderComponent'
 import Main from './components/Main'
+import Error from './Error'
 import './App.css'
-import { jwtDecode } from "jwt-decode";
 
 function App() {
 
-  
+  const roles = localStorage.getItem("roles")
 
   return (
     <>
