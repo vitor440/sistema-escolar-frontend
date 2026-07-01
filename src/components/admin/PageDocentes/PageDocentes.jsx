@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useState, useEffect } from 'react';
+import { DocenteHook } from '../../hooks/DocenteHook';
 
 const PageDocentes = () => {
 
@@ -23,20 +24,16 @@ const PageDocentes = () => {
         })
         
       const [docentes, setDocentes] = useState([])
+      const {listar} = DocenteHook()
+      const [loading, setLoading] = useState(false)
 
       useEffect(() => {
         async function getDocentes() {
         
         try {
-          const response = await fetch(`http://localhost:8080/docentes?pagina=${paginationModel.page}&tamanho=10`, {
-            headers: {
-              "Authorization": `Bearer ${localStorage.getItem("access_token")}` 
-            },
-            credentials: "include"
-          })
-
-          const data = await response.json()
-          console.log(data.content)
+          setLoading(true)
+          const data = await listar(paginationModel.page, paginationModel.pageSize)
+          setLoading(false)
           setDocentes(data.content)
 
         } catch (error) {
@@ -116,6 +113,7 @@ const PageDocentes = () => {
                     <DataGrid  
                     rows={docentes} 
                     columns={columns} 
+                    loading={loading}
                     style={{color:"#fff", margin:"0 auto", width:"1360px"}} 
                     initialState={{pagination: {paginationModel: {pageSize: 3}}}} 
                     autoHeight={true} 

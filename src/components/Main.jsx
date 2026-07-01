@@ -1,6 +1,6 @@
 import React from 'react'
 import SideBar from './SideBar'
-import MainContent from './MainContent'
+import MainContent from './aluno/dashboard/MainContent'
 import { Outlet } from 'react-router-dom'
 import './Main.css'
 import { useState, useEffect } from 'react'

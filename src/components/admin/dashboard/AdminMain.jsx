@@ -1,7 +1,7 @@
 import React from 'react'
-import Info from './Info'
-import ListaAvaliacoes from './ListaAvaliacoes';
-import ListaTarefas from './ListaTarefas';
+import Info from '../../Info'
+import ListaAvaliacoes from '../../aluno/PageExames/ListaAvaliacoes';
+import ListaTarefas from '../../aluno/PageTarefas/ListaTarefas';
 import { FaBook } from "react-icons/fa";
 import { LuNotebookText } from "react-icons/lu";
 import { FaPencil } from "react-icons/fa6";
@@ -13,6 +13,9 @@ import { CiEdit } from "react-icons/ci";
 import { BarChart, axisClasses } from '@mui/x-charts';
 import { useState, useEffect } from 'react';
 import "./AdminMain.css"
+import { CursoHooks } from '../../hooks/CursoHooks';
+import { DepartamentoHook } from '../../hooks/DepartamentoHook';
+import { DocenteHook } from '../../hooks/DocenteHook';
 
 const AdminMain = () => {
 
@@ -26,42 +29,86 @@ const AdminMain = () => {
     }
   })
 
+  const {listar, cursosPorAlunos, areasPorCurso, countCursos} = CursoHooks()
+  const {countDepartamentos}  = DepartamentoHook()
+  const {countDocentes} = DocenteHook()
+  const [loading, setLoading] = useState(false)
+
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10
   })
-  const [departamentos, setDepartamentos] = useState([])
+  const [cursos, setCursos] = useState([])
+  const [barchartData, setBarchartData] = useState([])
+  const [pieData, setPieData] = useState([])
+  const [totalCursos, setTotalCursos] = useState(0)
+  const [totalDepartamentos, setTotalDepartamentos] = useState(0)
+  const [totalDocentes, setTotalDocentes] = useState(0)
 
   useEffect(() => {
 
-      async function getDepartamentos() {
-        
-        try {
-          const response = await fetch(`http://localhost:8080/cursos?pagina=${paginationModel.page}&tamanho=10`, {
-            headers: {
-              "Authorization": `Bearer ${localStorage.getItem("access_token")}` 
-            },
-            credentials: "include"
-          })
-
-          const data = await response.json()
-          console.log(data.content)
-          setDepartamentos(data.content)
-
-        } catch (error) {
-          alert(error)
-        }
+      async function obterCursos() {
+        const data = await listar(paginationModel.page, paginationModel.pageSize)
+        setCursos(data.content)
       }
 
-      getDepartamentos()
+      
+
+      obterCursos()
   }, [paginationModel])
 
+
+
+  useEffect(() => {
+    
+    async function getBarChartData() {
+      setLoading(true)
+      const data = await cursosPorAlunos()
+      setLoading(false)
+      setBarchartData(data)
+    }
+
+    async function getPieData() {
+      const data = await areasPorCurso()
+
+      setPieData(data.map(d => {
+        return {label: d[0], value: d[1]}
+      }))
+    }
+
+    async function totalCursos() {
+        const data = await countCursos()
+        setTotalCursos(data)
+        console.log(totalCursos)
+      }
+
+    async function totalDepartamentos() {
+      const data = await countDepartamentos()
+      setTotalDepartamentos(data)
+    }
+
+    async function totalDocentes() {
+      const data = await countDocentes()
+      setTotalDocentes(data)
+    }
+
+    setLoading(true)
+
+    getBarChartData()
+    getPieData()
+    totalCursos()
+    totalDepartamentos()
+    totalDocentes()
+
+    setLoading(false)
+  }, [])
+
   const columns = [
-    { field: 'nome', headerName: 'nome', width: 230, renderActionsCell },
+    { field: 'nome', headerName: 'nome', width: 230 },
     { field: 'area', headerName: 'Área', width: 230 },
     { field: 'quantidadeAlunos', headerName: 'quantidade_alunos', width: 230 },
-    { field: 'turno', headerName: 'Turno', width: 230 },
-    { field: 'periodos', headerName: 'Periodos', width: 230 },
+    { field: 'periodo', headerName: 'Turno', width: 230 },
+    { field: 'quantidadePeriodos', headerName: 'Periodos', width: 230 },
     {field: "actions", headerName:"Actions", type: "actions", width: 200, getActions: (id) => {
       return [
         <GridActionsCellItem 
@@ -89,55 +136,20 @@ const AdminMain = () => {
     //console.log(id);
   }
 
-  
-
-  const pieData = [
-    {
-      label: "ciências exatas",
-      value: 20
-    },
-    {
-      label: "ciências humanas",
-      value: 25
-    },
-    {
-      label: "letras e linguistica",
-      value: 18
-    }
-
-  ]
-
   return (
     <div className="main">
       <h2 id='title'>Bem-Vindo Admin</h2>
         <div className="content">
-            <Info Icone={FaBook} titulo="Departamentos" content="12" cor = "#01460a"/>
-            <Info Icone={LuNotebookText} titulo="Cursos" content="21" cor="#914202"/>
-            <Info Icone={FaPencil} titulo="Total Docentes" content="43" cor="#021791"/>
-            <Info Icone={FaPencil} titulo="Total Alunos" content="153" cor="#021791"/>
-            <Info Icone={FaPencil} titulo="Usuários" content="153" cor="#021791"/>
-            <Info Icone={FaPencil} titulo="Usuários" content="153" cor="#021791"/>
-            {/* <ListaTarefas/> */}
-            {/* <div id="grid-div">
-              <h2>Lista</h2>
-              <div id="grid-table">
-                <ThemeProvider theme={infoThemes}>
-                    <DataGrid  
-                    rows={rows} 
-                    columns={columns} 
-                    style={{color:"#fff", margin:"0 auto", width:"860px"}} 
-                    initialState={{pagination: {paginationModel: {pageSize: 3}}}} 
-                    autoHeight={true} 
-                    disableRowSelectionOnClick
-                    />
-                </ThemeProvider>
-
-              </div>
-
-            </div> */}
+            <Info Icone={FaBook} titulo="Departamentos" content={totalDepartamentos} cor = "#01460a"/>
+            <Info Icone={LuNotebookText} titulo="Cursos" content={totalCursos} cor="#914202"/>
+            <Info Icone={FaPencil} titulo="Docentes" content={totalDocentes} cor="#021791"/>
+            {/* <Info Icone={FaPencil} titulo="Total Alunos" content="153" cor="#021791"/> */}
+            {/* <Info Icone={FaPencil} titulo="Usuários" content="153" cor="#021791"/> */}
+            {/* <Info Icone={FaPencil} titulo="Usuários" content="153" cor="#021791"/> */}
             
             <div id="barchart-container">
             <BarChart
+            loading={loading}
              sx={(theme) => ({
               [`.${axisClasses.root}`]: {
                 [`.${axisClasses.tick}, .${axisClasses.line}`]: {
@@ -152,8 +164,8 @@ const AdminMain = () => {
              style={{color:"#fff", backgroundColor:"#181818"}}
              width={860} 
              height={300}
-             xAxis={[{data: ["exatas", "humanas", "engenharias", "letras", "ciências biológicas"]}]}
-             series={[{data: [20, 32, 19, 16, 18]}]}/>
+             xAxis={[{data: barchartData.map(d => d[0])}]}
+             series={[{data: barchartData.map(d => d[1])}]}/>
 
             </div>
 
@@ -161,7 +173,7 @@ const AdminMain = () => {
               <h2>Proporção de Cursos por Área do Conhecimento</h2>
             <div id="pie-chart-div">
 
-                <PieChart width={200} height={200} series={[
+                <PieChart width={200} loading={loading} height={200} series={[
                   {
                     data: pieData,
                     highlightScope: { fade: 'global', highlight: 'item' },
@@ -177,13 +189,14 @@ const AdminMain = () => {
               <div id="grid-table">
                 <ThemeProvider theme={infoThemes}>
                     <DataGrid  
-                    rows={departamentos} 
+                    rows={cursos} 
                     columns={columns} 
                     style={{color:"#fff", margin:"0 auto", width:"1360px"}} 
                     autoHeight={true} 
                     disableRowSelectionOnClick
-                    paginationMode='server'
+                    loading={loading}
                     pagination
+                    pageSizeOptions={[10, 15, 20]}
                     onPaginationModelChange={setPaginationModel}
                     />
                 </ThemeProvider>

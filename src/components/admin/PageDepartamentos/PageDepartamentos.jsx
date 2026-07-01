@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useState, useEffect } from 'react';
+import { DepartamentoHook } from '../../hooks/DepartamentoHook';
 
 const PageDepartamentos = () => {
 
@@ -24,20 +25,17 @@ const PageDepartamentos = () => {
         })
         
       const [departamentos, setDepartamentos] = useState([])
+      const {listar} = DepartamentoHook()
+      const [loading, setloading] = useState(false)
 
       useEffect(() => {
+
         async function getDepartamentos() {
         
         try {
-          const response = await fetch(`http://localhost:8080/departamentos?pagina=${paginationModel.page}&tamanho=10`, {
-            headers: {
-              "Authorization": `Bearer ${localStorage.getItem("access_token")}` 
-            },
-            credentials: "include"
-          })
-
-          const data = await response.json()
-          console.log(data.content)
+          setloading(true)
+          const data = await listar(paginationModel.page, paginationModel.pageSize)
+          setloading(false)
           setDepartamentos(data.content)
 
         } catch (error) {
@@ -105,6 +103,7 @@ const PageDepartamentos = () => {
             <div id="grid-table">
             <ThemeProvider theme={infoThemes}>
                 <DataGrid  
+                loading={loading}
                 rows={departamentos} 
                 columns={columns} 
                 style={{color:"#fff", margin:"0 auto", width:"1360px"}} 

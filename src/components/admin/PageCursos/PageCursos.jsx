@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useState, useEffect } from 'react';
+import { CursoHooks } from '../../hooks/CursoHooks';
 
 const PageCursos = () => {
 
@@ -24,6 +25,7 @@ const PageCursos = () => {
             })
             
     const [cursos, setCursos] = useState([])
+    const {listar} = CursoHooks()
 
     const params = new URLSearchParams()
     params.set("pagina", `${paginationModel.page}`)
@@ -34,16 +36,7 @@ const PageCursos = () => {
         
         try {
           setloading(true)
-          const response = await fetch(`http://localhost:8080/cursos?${params.toString()}`, {
-            headers: {
-              "Authorization": `Bearer ${localStorage.getItem("access_token")}` 
-            },
-            credentials: "include",
-          })
-
-          
-
-          const data = await response.json()
+          const data = await listar(paginationModel.page, paginationModel.pageSize)
           setloading(false)
           setCursos(data.content)
 

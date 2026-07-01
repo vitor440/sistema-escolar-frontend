@@ -1,8 +1,8 @@
 import React from 'react'
 import './MainContent.css'
-import Info from './Info'
-import ListaAvaliacoes from './ListaAvaliacoes';
-import ListaTarefas from './ListaTarefas';
+import Info from '../../Info'
+import ListaAvaliacoes from '../PageExames/ListaAvaliacoes';
+import ListaTarefas from '../PageTarefas/ListaTarefas';
 import { FaBook } from "react-icons/fa";
 import { LuNotebookText } from "react-icons/lu";
 import { FaPencil } from "react-icons/fa6";
